@@ -114,42 +114,45 @@ String MsgRecebida;
 char PacketRecebe[100];
 char PacketEnvia[50] = "Msg enviada";
 String MsgDebug1 = "Iniciando ...";
-String MsgDebug2 = "";
-String MsgDebug3 = "";
-String MsgDebug4 = "";
-
-// pisca led 
-// ESP8622 (NodeMCU LED = gpio16 D0  /  ESP12 led = GPIO02 D4 )
-#define led8622 2
-//#define led8622 D4
-long ultimapisca = -50000;
-long intervalopisca = 2000; // 2 seg
-
-// envia msg ok de tempos em tempos e ler nivel da caixa
-long ultimoenviook = -50000;
-long intervaloenviook = 10000; // 10 seg
-
-//==============================================
-void ApagaLed( ) {digitalWrite(led8622, HIGH);}
-void LigaLed() {digitalWrite(led8622, LOW);}
-
-//=======================================================================
 String PageHTML() {
- String  txtpage = "";
- String  auxtxt = "";
+  String txtpage = "";
   txtpage += "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">";
   txtpage += "<html>";
   txtpage += "<head>";
   txtpage += "  <meta http-equiv=\"content-type\" content=\"text/html; charset=windows-1252\"/>";
-  txtpage += "  <title> Medidor da Temperatura da Sauna </title>";
-  txtpage += "  <style type=\"text/css\"> p { margin-left: 0.75cm; line-height: 100%; background: transparent } </style>";
+  txtpage += "  <title> Sauna </title>";
+  txtpage += "  <style type=\"text/css\">* {margin: 0;padding: 0;box-sizing: border-box;font-family: monospace,'Courier New', Courier;} body {padding: 1em;} .title {text-align: center;font-size: 4em;} #termometro-container {display: flex;justify-content: center;align-items: center;margin: 1em 0;} #termometro-div {font-size: 2.5em;border-radius: 35%;border: 0.5rem solid #1b6af3;background: radial-gradient(circle at center, #fb623c, #fcfe7b);padding: 1em;color: white;display: flex;justify-content: center;align-items: center;font-weight: bold;height: 17rem;width: 17rem;} .status{margin-top: 1.5rem;font-size: 0.7em;} .space {padding-left: 2rem;} .center{text-align: center;} .sub-title{font-weight: 700;}  </style>";
   txtpage += "</head>";
   txtpage += "<body lang=\"pt-BR\" dir=\"ltr\">";
-//  <p style=\"margin-bottom: 0cm; background: #558b9d"; line-height: 100%\">";
-//  txtpage += "<font color=\"#00008b\"><font size=\"5\" style=\"font-size: 14pt\"> Medidor Nivel da Caixa de Agua " + auxtxt + " </font></font></p>";
-  txtpage += "<p style=\"margin-bottom: 0cm; background: #558b9d; line-height: 200%\"><font color=\"#ffffff\"><font size=\"6\" style=\"font-size: 16pt\">Medidor Temperatura Sauna " + auxtxt  + "</font></font></p>";
-  //txtpage += "<p style=\"margin-bottom: 0cm; line-height: 100%\"><br/></p>";
-  auxtxt = WiFi.SSID();
+  txtpage += "<h1 class=\"title\">Temperatura Sauna</h1>";
+  txtpage += "<p class=\"center\">" + WiFi.SSID() + "</p>";
+  txtpage += "<div id=\"termometro-container\">";
+  txtpage += "  <div id=\"termometro-div\">";
+  txtpage += String(temp) + " &deg;C";
+  txtpage += "  </div>";
+  txtpage += "</div>";
+  txtpage += "<p class=\"center\">" + getTime() + "</p>";
+  txtpage += "<div class=\"status\">";
+  txtpage += "  <h3>Status da conexão:</h3>";
+  txtpage += "  <p>Rede Wifi: " + WiFi.SSID() + "</p>";
+  txtpage += "  <p>IP: " + myIP.toString() + "</p>";
+  txtpage += "  <div>";
+  txtpage += "    <h3>Porta UDP:</h3>";
+  txtpage += "    <p class=\"space\">recebe msg: " + String(localUdpPort) + "</p>";
+  txtpage += "    <p class=\"space\">envia broadcast: " + String(HOST_PORT) + "</p>";
+  txtpage += "  </div>";
+  txtpage += "  <h3>Mensagens de status: </h3>";
+  txtpage += "  <p class=\"space\">Msg1: " + MsgDebug1 + "</p>";
+  txtpage += "  <p class=\"space\">Msg2: " + MsgDebug2 + "</p>";
+  txtpage += "  <p class=\"space\">Msg3: " + MsgDebug3 + "</p>";
+  txtpage += "  <p class=\"space\">Msg4: " + MsgDebug4 + "</p>";
+  txtpage += "  <p>Atualizar software: <a href=\"http://ip/update\" target=\"_blank\">http://ip/update</a></p>";
+  txtpage += "  <p>Reset dados wifi: <a href=\"http://ip/resetnet\" target=\"_blank\">http://ip/resetnet</a></p>";
+  txtpage += "</div>";
+  txtpage += "</body>";
+  txtpage += "</html>";
+  return txtpage;
+}
   txtpage += "<p style=\"margin-bottom: 0cm; line-height: 100%\"><font color=\"#000000\"><font size=\"4\" style=\"font-size: 12pt\">Status da conex&atilde;o  Conectado na rede Wifi: " + auxtxt  + "</font></font></p>";
   auxtxt = myIP.toString().c_str();
   txtpage += "<p style=\"margin-bottom: 0cm; line-height: 100%\"><font color=\"#000000\"><font size=\"4\" style=\"font-size: 12pt\"> IP do dispositivo: " + auxtxt + "</font></font></p>";

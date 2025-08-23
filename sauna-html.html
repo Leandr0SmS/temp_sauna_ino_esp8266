@@ -2,25 +2,68 @@
 <html>
 <head>
   <meta http-equiv="content-type" content="text/html; charset=windows-1252"/>
-  <title> Medidor da Temperatura da Sauna </title>
+  <title> Sauna </title>
   <style type="text/css">
-    p { margin-left: 0.75cm; line-height: 100%; background: transparent }
+    * {margin: 0;padding: 0;box-sizing: border-box;font-family: monospace,'Courier New', Courier;}
+    body {
+        padding: 1em;
+    }
+    .title {
+      text-align: center;
+      font-size: 4em;
+    }
+    #termometro-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 1em 0;
+    }
+    #termometro-div {
+      font-size: 2.5em;
+      border-radius: 35%;
+      border: 0.5rem solid #1b6af3;
+      background: radial-gradient(circle at center, #fb623c, #fcfe7b);
+      padding: 1em;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      height: 17rem;
+      width: 17rem;
+    }
+    .status{margin-top: 1.5rem;font-size: 0.7em;}
+    .space {padding-left: 2rem;}
+    .center{text-align: center;}
+    .sub-title{font-weight: 700;}
   </style>
 </head>
 <body lang="pt-BR" dir="ltr">
     
-  <p style="margin-bottom: 0cm; background: #558b9d; line-height: 200%; color: #ffffff; font-size: 16pt;">Medidor Temperatura Sauna [auxtxt]</p>
-
-
-  <p style="margin-bottom: 0cm; line-height: 100%; color: #000080; font-size: 16pt; font-weight: bold;">  Temperatura interior sauna: [temp] &deg;C </p>
-  <p style="margin-bottom: 0cm; line-height: 100%; color: #000000; font-size: 12pt;">Status da conexão  Conectado na rede Wifi: [WiFi.SSID()]</p>
-  <p style="margin-bottom: 0cm; line-height: 100%; color: #000000; font-size: 12pt;"> IP do dispositivo: [myIP]</p>
-  <p style="margin-bottom: 0cm; line-height: 100%; color: #000000; font-size: 12pt;"> Porta UDP - recebe msg: [localUdpPort]  |  envia broadcast: [HOST_PORT]</p>
-  <p style="margin-bottom: 0cm; line-height: 100%; color: #000000; font-size: 12pt;">Mensagens de status: </p>
-  <p style="margin-bottom: 0cm; margin-left: 0.9cm; line-height: 100%; color: #000000; font-size: 12pt;">   Msg1 : [MsgDebug1]</p>
-  <p style="margin-bottom: 0cm; margin-left: 0.9cm; line-height: 100%; color: #000000; font-size: 12pt;">   Msg2 : [MsgDebug2]</p>
-  <p style="margin-bottom: 0cm; margin-left: 0.9cm; line-height: 100%; color: #000000; font-size: 12pt;">   Msg3 : [MsgDebug3]</p>
-  <p style="margin-bottom: 0cm; margin-left: 0.9cm; line-height: 100%; color: #000000; font-size: 12pt;">   Msg4 : [MsgDebug4]</p>
-  <p style="margin-bottom: 0cm; background: #558b9d; line-height: 180%; color: #ffffff; font-size: 14pt;"> [getTime()]  || atualizar software - http://ip/update || reset dados wifi - http://ip/resetnet </p>
+  <h1 class="title">Temperatura Sauna</h1>
+  <p class="center">[auxtxt]</p>
+  <div id="termometro-container">
+    <div id="termometro-div">
+        [temp] &deg;C
+    </div>
+</div>
+<p class="center"> [getTime()] </p>
+<div class="status">
+    <h3>Status da conexão:</h3>
+    <p>Rede Wifi: [WiFi.SSID()]</p>
+    <p>IP: [myIP]</p>
+    <div>
+        <h3>Porta UDP:</h3>
+        <p class="space">recebe msg: [localUdpPort]</p>
+        <p class="space">envia broadcast: [HOST_PORT]</p>
+    </div>
+    <h3>Mensagens de status: </h3>
+    <p class="space">Msg1: [MsgDebug1]</p>
+    <p class="space">Msg2: [MsgDebug2]</p>
+    <p class="space">Msg3: [MsgDebug3]</p>
+    <p class="space">Msg4: [MsgDebug4]</p>
+    <p>Atualizar software: <a href="http://ip/update" target="_blank">http://ip/update</a></p>
+    <p>Reset dados wifi: <a href="http://ip/resetnet" target="_blank">http://ip/resetnet</a></p>
+</div>
 </body>
 </html>
