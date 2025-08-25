@@ -5,19 +5,9 @@
   <title> Sauna </title>
   <style type="text/css">
     * {margin: 0;padding: 0;box-sizing: border-box;font-family: monospace,'Courier New', Courier;}
-    body {
-        padding: 1em;
-    }
-    .title {
-      text-align: center;
-      font-size: 4em;
-    }
-    #termometro-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 1em 0;
-    }
+    body {padding: 1em;}
+    .title {text-align: center;font-size: 4em;}
+    #termometro-container {display: flex;justify-content: center;align-items: center;margin: 1em 0;}
     #termometro-div {
       font-size: 2.5em;
       border-radius: 35%;
@@ -39,31 +29,30 @@
   </style>
 </head>
 <body lang="pt-BR" dir="ltr">
-    
   <h1 class="title">Temperatura Sauna</h1>
-  <p class="center">[auxtxt]</p>
+  <p class="center">[WiFi.SSID()]</p>
   <div id="termometro-container">
     <div id="termometro-div">
-        [temp] &deg;C
+      [temp] &deg;C
     </div>
-</div>
-<p class="center"> [getTime()] </p>
-<div class="status">
-    <h3>Status da conexão:</h3>
+  </div>
+  <p class="center">[getTime()]</p>
+  <div class="status">
+    <h3>Status da conex&atilde;o:</h3>
     <p>Rede Wifi: [WiFi.SSID()]</p>
     <p>IP: [myIP]</p>
     <div>
-        <h3>Porta UDP:</h3>
-        <p class="space">recebe msg: [localUdpPort]</p>
-        <p class="space">envia broadcast: [HOST_PORT]</p>
+      <h3>Porta UDP:</h3>
+      <p class="space">recebe msg: [localUdpPort]</p>
+      <p class="space">envia broadcast: [HOST_PORT]</p>
     </div>
     <h3>Mensagens de status: </h3>
     <p class="space">Msg1: [MsgDebug1]</p>
     <p class="space">Msg2: [MsgDebug2]</p>
     <p class="space">Msg3: [MsgDebug3]</p>
     <p class="space">Msg4: [MsgDebug4]</p>
-    <p>Atualizar software: <a href="http://ip/update" target="_blank">http://ip/update</a></p>
-    <p>Reset dados wifi: <a href="http://ip/resetnet" target="_blank">http://ip/resetnet</a></p>
-</div>
+    <p>Atualizar software: <a href="http://[myIP]/update" target="_blank">http://[myIP]/update</a></p>
+    <p>Reset dados wifi: <a href="http://[myIP]/resetnet" target="_blank">http://[myIP]/resetnet</a></p>
+  </div>
 </body>
 </html>

@@ -114,6 +114,26 @@ String MsgRecebida;
 char PacketRecebe[100];
 char PacketEnvia[50] = "Msg enviada";
 String MsgDebug1 = "Iniciando ...";
+String MsgDebug2 = "";
+String MsgDebug3 = "";
+String MsgDebug4 = "";
+
+// pisca led 
+// ESP8622 (NodeMCU LED = gpio16 D0  /  ESP12 led = GPIO02 D4 )
+#define led8622 2
+//#define led8622 D4
+long ultimapisca = -50000;
+long intervalopisca = 2000; // 2 seg
+
+// envia msg ok de tempos em tempos e ler nivel da caixa
+long ultimoenviook = -50000;
+long intervaloenviook = 10000; // 10 seg
+
+//==============================================
+void ApagaLed( ) {digitalWrite(led8622, HIGH);}
+void LigaLed() {digitalWrite(led8622, LOW);}
+
+//=======================================================================
 String PageHTML() {
   String txtpage = "";
   txtpage += "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">";
@@ -140,12 +160,12 @@ String PageHTML() {
   txtpage += "<p class=\"center\">" + WiFi.SSID() + "</p>";
   txtpage += "<div id=\"termometro-container\">";
   txtpage += "  <div id=\"termometro-div\">";
-  txtpage += String(temp) + " &deg;C";
+  txtpage += String(temp,1) + " &deg;C";
   txtpage += "  </div>";
   txtpage += "</div>";
   txtpage += "<p class=\"center\">" + getTime() + "</p>";
   txtpage += "<div class=\"status\">";
-  txtpage += "  <h3>Status da conexão:</h3>";
+  txtpage += "  <h3>Status da conex&atilde;o:</h3>";
   txtpage += "  <p>Rede Wifi: " + WiFi.SSID() + "</p>";
   txtpage += "  <p>IP: " + myIP.toString() + "</p>";
   txtpage += "  <div>";
@@ -158,33 +178,16 @@ String PageHTML() {
   txtpage += "  <p class=\"space\">Msg2: " + MsgDebug2 + "</p>";
   txtpage += "  <p class=\"space\">Msg3: " + MsgDebug3 + "</p>";
   txtpage += "  <p class=\"space\">Msg4: " + MsgDebug4 + "</p>";
-  txtpage += "  <p>Atualizar software: <a href=\"http://ip/update\" target=\"_blank\">http://ip/update</a></p>";
-  txtpage += "  <p>Reset dados wifi: <a href=\"http://ip/resetnet\" target=\"_blank\">http://ip/resetnet</a></p>";
+  txtpage += "  <p>Atualizar software: <a href=\"http://" + myIP.toString() + "/update\" target=\"_blank\">http://" + myIP.toString() + "/update</a></p>";
+  txtpage += "  <p>Reset dados wifi: <a href=\"http://" + myIP.toString() + "/resetnet\" target=\"_blank\">http://" + myIP.toString() + "/resetnet</a></p>";
   txtpage += "</div>";
   txtpage += "</body>";
   txtpage += "</html>";
   return txtpage;
 }
-  txtpage += "<p style=\"margin-bottom: 0cm; line-height: 100%\"><font color=\"#000000\"><font size=\"4\" style=\"font-size: 12pt\">Status da conex&atilde;o  Conectado na rede Wifi: " + auxtxt  + "</font></font></p>";
-  auxtxt = myIP.toString().c_str();
-  txtpage += "<p style=\"margin-bottom: 0cm; line-height: 100%\"><font color=\"#000000\"><font size=\"4\" style=\"font-size: 12pt\"> IP do dispositivo: " + auxtxt + "</font></font></p>";
-  auxtxt = String(localUdpPort) +"  |  envia broadcast: " + HOST_PORT;
-  txtpage += "<p style=\"margin-bottom: 0cm; line-height: 100%\"><font color=\"#000000\"><font size=\"4\" style=\"font-size: 12pt\"> Porta UDP - recebe msg: " + auxtxt + "</font></font></p>";
-  txtpage += "<p style=\"margin-bottom: 0cm; line-height: 100%\"><br/></p>";
-  auxtxt = String(temp) + " &deg;C " ;
-  txtpage += "<p style=\"margin-bottom: 0cm; line-height: 100%\"><font color=\"#000080\"><font size=\"6\" >  Temperatura interior sauna: " + auxtxt + "</font></font></p>";
-  txtpage += "<p style=\"margin-bottom: 0cm; line-height: 100%\"><br/></p>";
-  txtpage += "<p style=\"margin-bottom: 0cm; line-height: 100%\"><font color=\"#000000\"><font size=\"4\" style=\"font-size: 12pt\">Mensagens de status: </font></font></p>";
-  txtpage += "<p style=\"margin-bottom: 0cm; margin-left: 0.9cm; line-height: 100%\"><font color=\"#000000\"><font size=\"4\" style=\"font-size: 12pt\">   Msg1 : " + MsgDebug1 + "</font></font></p>";
-  txtpage += "<p style=\"margin-bottom: 0cm; margin-left: 0.9cm; line-height: 100%\"><font color=\"#000000\"><font size=\"4\" style=\"font-size: 12pt\">   Msg2 : " + MsgDebug2 + "</font></font></p>";
-  txtpage += "<p style=\"margin-bottom: 0cm; margin-left: 0.9cm; line-height: 100%\"><font color=\"#000000\"><font size=\"4\" style=\"font-size: 12pt\">   Msg3 : " + MsgDebug3 + "</font></font></p>";
-  txtpage += "<p style=\"margin-bottom: 0cm; margin-left: 0.9cm; line-height: 100%\"><font color=\"#000000\"><font size=\"4\" style=\"font-size: 12pt\">   Msg4 : " + MsgDebug4 + "</font></font></p>";
-  auxtxt =  getTime() + "  || atualizar software - http://ip/update || reset dados wifi - http://ip/resetnet ";
-  txtpage += "<p style=\"margin-bottom: 0cm; background: #558b9d; line-height: 180%\"><font color=\"#ffffff\"><font size=\"4\" style=\"font-size: 14pt\"> " + auxtxt + "</font></font></p>";
-  txtpage += "</body>";
-  txtpage += "</html>";  
-  return txtpage;
-}
+
+
+
 
 String NovaMsgDebug( String msg) {
   MsgDebug1 = MsgDebug2;
