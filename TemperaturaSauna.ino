@@ -301,7 +301,7 @@ void setup()
   // comunicacao broker MQTT 
   initMQTT();
   
-  MDNS.begin(APSSID);
+  MDNS.begin("sauna");
   server.on("/", handleRoot);
   server.on("/resetnet", ResetNet);
   httpUpdater.setup(&server); 
@@ -375,7 +375,7 @@ void LerTemperatura() {
   // Manda comando para ler temperaturas
   sensor.requestTemperatures(); 
   temp = sensor.getTempCByIndex(0);
-
+  temp = (temp / 113) * 100;  // reduz 13% do valor para corrigir erro
   lcd.clear();  
   lcd.setCursor(0, 0);               // Set the cursor to the first column and first row
   lcd.print(" TEMP. INTERNA ");     // Print some text
