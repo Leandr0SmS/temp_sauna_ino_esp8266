@@ -5,28 +5,40 @@
   <title> Sauna </title>
   <style type="text/css">
     * {margin: 0;padding: 0;box-sizing: border-box;font-family: monospace,'Courier New', Courier;}
-    body {padding: 1em;}
+    body {padding: 1em;background-color: rgb(245, 253, 253);}
     .title {text-align: center;font-size: 4em;}
-    #termometro-container {display: flex;justify-content: center;align-items: center;}
+    #termometro-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 90vh;
+    }
     #termometro-div {
-      font-size: 2.5em;
-      border-radius: 35%;
-      border: 0.5rem solid #1b6af3;
-      background: radial-gradient(circle at center, #fb623c, #fcfe7b);
+      font-size: 6em;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, #fb853c 22%, #fcff47);
+      box-shadow: 0 0 6rem 2rem #fff018;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       padding: 1em;
       color: white;
       display: flex;
       justify-content: center;
       align-items: center;
       font-weight: bold;
-      height: 17rem;
-      width: 17rem;
+      height: 45rem;
+      width: 45rem;
     }
-    #optionsIcon:hover{
-      cursor: pointer;
+    #status{
+      margin: 4rem;
+      display: none;
+      margin-top: 1.5rem;
+      font-size: 3em;
     }
-    #status{margin-top: 1.5rem;font-size: 0.7em;display: none;}
-    .space {padding-left: 2rem;}
+    h3 {
+      margin-top: 2rem;
+    }
+    .space {padding-left: 2.5rem;}
     .center{text-align: center;}
     .sub-title{font-weight: 700;}
     .hide {
@@ -37,6 +49,16 @@
     }
     #termometro-container, #status {
       transition: opacity 0.3s;
+    }
+    #optionsIcon {
+      margin: 1rem;
+      height: 5rem;
+      opacity: 0.6;
+    }
+        #optionsIcon:hover{
+      cursor: pointer;
+      opacity: 0.9;
+      transform: scale(1.1);
     }
   </style>
 </head>
